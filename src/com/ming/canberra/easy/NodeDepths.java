@@ -23,8 +23,27 @@ public class NodeDepths {
         }
     }
 
-    public static int nodeDepths(BinaryTree root) {
+    private static int sum = 0;
 
-        return -1;
+    public static int nodeDepths(BinaryTree root) {
+        sum = 0;
+        if (root == null){
+            return 0;
+        }
+        recursiveFun(root, 0);
+        return sum;
+    }
+
+    private static void recursiveFun(BinaryTree root, int depth){
+        if (root== null){
+            return;
+        }
+        sum+=depth;
+        if (root.left == null && root.right == null){
+            return;
+        }
+        depth+=1;
+        recursiveFun(root.left, depth);
+        recursiveFun(root.right, depth);
     }
 }
