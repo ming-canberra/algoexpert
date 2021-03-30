@@ -2,13 +2,20 @@ package com.ming.canberra.medium;
 
 public class FirstDuplicateValue {
     public static void main(String[] args) {
-        int aa[] = new int[]{1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};
+        int aa[] = new int[]{2, 1, 1};
         FirstDuplicateValue arrayOfProducts = new FirstDuplicateValue();
         System.out.println (arrayOfProducts.firstDuplicateValue(aa));
     }
 
     public int firstDuplicateValue(int[] array) {
-        // Write your code here.
+        for (int i = 0;i < array.length; i++){
+            if (array[Math.abs(array[i]) - 1] > 0){
+                array[Math.abs(array[i]) - 1] *= -1;
+            }
+            else{
+                return Math.abs(array[i]);
+            }
+        }
         return -1;
     }
 }
