@@ -20,18 +20,61 @@ public class SuffixTrieConstruction {
     static class SuffixTrie {
         TrieNode root = new TrieNode();
         char endSymbol = '*';
-
         public SuffixTrie(String str) {
             populateSuffixTrieFrom(str);
         }
 
         public void populateSuffixTrieFrom(String str) {
-            // Write your code here.
+            for (int i = 0; i < str.length(); i++){
+                addToChildren(root, str.substring(i, str.length()));
+            }
+        }
+
+        private void addToChildren(TrieNode node, String str) {
+            if (str.equals(""))
+            {
+                node.children.put(endSymbol, null);
+            }
+            else {
+                if (node.children.containsKey(str.charAt(0))) {
+                    TrieNode valueNode = node.children.get(str.charAt(0));
+                    addToChildren(valueNode, str.substring(1, str.length()));
+                } else {
+                    TrieNode a = new TrieNode();
+                    node.children.put(str.charAt(0), a);
+                    addToChildren(a, str.substring(1, str.length()));
+                }
+            }
         }
 
         public boolean contains(String str) {
             // Write your code here.
-            return false;
+            if (str == null)
+            {
+                return false;
+            }
+            else if (str.equals("")) {
+                return false;
+            }
+            return contains(root, str);
+        }
+        private boolean contains(TrieNode node, String str){
+            if (str.equals("")) {
+                if (node.children.containsKey(endSymbol))
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                TrieNode nextNode = node.children.get(str.charAt(0));
+                if (nextNode == null){
+                    return false;
+                }
+                return contains(nextNode, str.substring(1, str.length()));
+            }
         }
     }
 }
