@@ -30,6 +30,8 @@ public class PhoneNumberMnemonics {
             String current = phoneNumber.substring(0, 1);
 
             HashMap<String, String[]> map = new HashMap<String, String[]>();
+            map.put("0", new String[]{"0"});
+            map.put("1", new String[]{"1"});
             map.put("2", new String[]{"a","b","c"});
             map.put("3", new String[]{"d","e","f"});
             map.put("4", new String[]{"g","h","i"});
@@ -39,16 +41,8 @@ public class PhoneNumberMnemonics {
             map.put("8", new String[]{"t","u","v"});
             map.put("9", new String[]{"w","x","y","z"});
 
-            if ("1".equals(current)){
-                fun(phoneNumber.substring(1, phoneNumber.length()), prefix + "1", result);
-            }
-            else if ("0".equals(current)){
-                fun(phoneNumber.substring(1, phoneNumber.length()), prefix + "0", result);
-            }
-            else{
-                for (String s : map.get(current)){
-                    fun(phoneNumber.substring(1, phoneNumber.length()), prefix + s, result);
-                }
+            for (String s : map.get(current)){
+                fun(phoneNumber.substring(1, phoneNumber.length()), prefix + s, result);
             }
         }
     }
