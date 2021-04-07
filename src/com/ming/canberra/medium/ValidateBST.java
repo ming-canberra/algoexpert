@@ -1,9 +1,6 @@
 package com.ming.canberra.medium;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ValidateBST {
     public static void main(String[] args) {
@@ -24,36 +21,21 @@ public class ValidateBST {
 
     public static boolean validateBst(BST tree) {
         // Write your code here.
-        if (tree == null){
+        return validateChildren(tree, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    // the root and all her children are between min and max
+    private static boolean validateChildren(BST root, int min, int max){
+        if (root == null){
             return true;
         }
 
-        int current = tree.value;
-        if (tree.left != null){
-            int leftChildValue = tree.left.value;
-            if (leftChildValue >= current){
-                return false;
-            }
-        }
-
-        if (tree.right != null){
-            int rightChildValue = tree.right.value;
-            if (rightChildValue < current){
-                return false;
-            }
-        }
-
-        if (!validateBst(tree.left)){
+        if( !(root.value >= min && root.value < max)){
             return false;
         }
 
-        if (!validateBst(tree.right)){
-            return false;
-        }
-
-        return true;
+        return validateChildren(root.left, min, root.value) && validateChildren(root.right, root.value, max);
     }
-
 
 
     static class BST {
