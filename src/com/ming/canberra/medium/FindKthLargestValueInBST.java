@@ -1,5 +1,7 @@
 package com.ming.canberra.medium;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FindKthLargestValueInBST {
@@ -24,8 +26,27 @@ public class FindKthLargestValueInBST {
         }
     }
     public int findKthLargestValueInBst(BST tree, int k) {
-        // Write your code here.
-        return -1;
+        List<Integer> intFound = new ArrayList<Integer>();
+        traverseAndCollectInt(tree, intFound, k);
+        Collections.sort(intFound);
+        return intFound.get(0);
+    }
+    private void traverseAndCollectInt(BST tree, List<Integer> list, int k)
+    {
+        if (list.size() == k){
+            return;
+        }
+        if (tree != null){
+            traverseAndCollectInt(tree.right, list, k);
+            if (list.size() == k){
+                return;
+            }
+            list.add(tree.value);
+            if (list.size() == k){
+                return;
+            }
+            traverseAndCollectInt(tree.left, list, k);
+        }
     }
 }
 
