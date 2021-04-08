@@ -3,6 +3,7 @@ package com.ming.canberra.medium;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 public class MinHeightBST {
     public static void main(String[] args) {
@@ -15,11 +16,25 @@ public class MinHeightBST {
         root.right.right = new MinHeightBST.BST(22);
 
     }
-
     public static BST minHeightBst(List<Integer> array) {
-        // Write your code here.
-        return null;
+        BST result = new BST(0);
+        int centralIndex = -1 + (array.size() + 1) / 2;
+        result.value = array.get(centralIndex);
+        recursiveFun(array, -1, centralIndex, result);
+        recursiveFun(array, centralIndex, array.size(), result);
+        return result;
     }
+
+    private static void recursiveFun(List<Integer> array, int loIndex, int hiIndex, BST result){
+        if (hiIndex - loIndex > 1)
+        {
+            int centralIndex = loIndex + (hiIndex - loIndex) / 2;
+            result.insert(array.get(centralIndex));
+            recursiveFun(array, loIndex, centralIndex, result);
+            recursiveFun(array, centralIndex, hiIndex, result);
+        }
+    }
+
 
     static class BST {
         public int value;
