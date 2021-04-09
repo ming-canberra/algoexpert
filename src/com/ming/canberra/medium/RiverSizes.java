@@ -1,15 +1,128 @@
 package com.ming.canberra.medium;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class RiverSizes {
     public static void main(String[] args) {
-        RiverSizes.riverSizes(new int[][]{new int[]{1,2},new int[]{1,43}});
+        RiverSizes.riverSizes(new int[][]{new int[]{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0} });
     }
 
+    /**
+     * graph traversal
+     * */
     public static List<Integer> riverSizes(int[][] matrix) {
+        boolean [][]visited = new boolean[matrix.length][matrix[0].length];
+
+        List<Integer> result = new ArrayList<Integer>();
+
+        for (int i = 0; i < matrix.length; i++)
+        {
+            for (int j = 0; j < matrix[0].length; j++){
+                if (!visited[i][j])
+                {
+                    if (matrix[i][j] == 0){
+                        visited[i][j] = true;
+                        continue;
+                    }
+                    else{
+                        // start counting river size
+                        int currentRiverSize = calculateRiverSizeUsingQueue(matrix, visited, i, j);
+                        result.add(currentRiverSize);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * calculate using queue
+     * */
+    private static int calculateRiverSizeUsingQueue(int[][] matrix, boolean[][] visited, int i, int j)
+    {
+        int[] index = new int[]{i, j};
+        Queue<int[]> queue = new LinkedList<int[]>();
+        int length = 0;
+        queue.add(index);
+        while (!queue.isEmpty())
+        {
+            int[] current = queue.poll();
+            if (!visited[current[0]][current[1]]){
+                visited[current[0]][current[1]] = true;
+                if(matrix[current[0]] [current[1]] == 1){
+                    length++;
+                    // check the neighbors
+                    //left
+                    int m = current[1] - 1;
+                    if (m >= 0 && m < matrix[0].length && !visited[current[0]][m]){
+                        queue.add(new int[]{current[0], m});
+                    }
+
+                    //right
+                    m = current[1] + 1;
+                    if (m >= 0 && m < matrix[0].length && !visited[current[0]][m]){
+                        queue.add(new int[]{current[0], m});
+                    }
+
+                    // up
+                    m = current[0] - 1;
+                    if (m >= 0 && m < matrix.length && !visited[m][current[1]]){
+                        queue.add(new int[]{m, current[1]});
+                    }
+
+                    // down
+                    m = current[0] + 1;
+                    if (m >= 0 && m < matrix.length && !visited[m][current[1]]){
+                        queue.add(new int[]{m, current[1]});
+                    }
+                }
+            }
+        }
+
+        return length;
+    }
+
+        /**
+         * iteratively calculate
+         * */
+    private static int calculateRiverSize(int[][] matrix, boolean[][] visited, int i, int j){
+        visited[i][j] = true;
+        if (matrix[i][j] == 0){
+            return 0;
+        }
+        int left = 0;
+        int right = 0;
+        int up = 0;
+        int down = 0;
+
+        int m = j - 1;
+        if (m >= 0 && m < matrix[0].length && !visited[i][m]){
+            left = calculateRiverSize(matrix, visited, i, m);
+        }
+
+        m = j + 1;
+        if (m >= 0 && m < matrix[0].length && !visited[i][m]){
+            right = calculateRiverSize(matrix, visited, i, m);
+        }
+
+        m = i - 1;
+        if (m >= 0 && m < matrix.length && !visited[m][j]){
+            up = calculateRiverSize(matrix, visited, m, j);
+        }
+
+        m = i + 1;
+        if (m >= 0 && m < matrix.length && !visited[m][j]){
+            down = calculateRiverSize(matrix, visited, m, j);
+        }
+
+        return 1 + left + right + up + down;
+    }
+
+        /**
+         * this is nasty
+        * */
+    public static List<Integer> riverSizes1(int[][] matrix) {
         // Write your code here.
         int riverIndex = 1;
         HashMap<Integer, List<int[]>> map = new HashMap<Integer, List<int[]>>();
