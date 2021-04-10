@@ -12,7 +12,6 @@ public class LongestCommonSubsequence {
     }
     public static List<Character> longestCommonSubsequence(String str1, String str2) {
         // Write your code here.
-        Set<Character> result = new HashSet<Character>();
         List<Character> resultList = new ArrayList<Character>();
 
         char[] chars1 = str1.toCharArray();
@@ -23,10 +22,6 @@ public class LongestCommonSubsequence {
             for (int j = 0; j < chars2.length; j++)
             {
                 if (chars1[i] == chars2[j]){
-                    if ( i >=j && !result.contains(chars2[j])){
-                        resultList.add(chars2[j]);
-                        result.add(chars2[j]);
-                    }
                     if (i == 0|| j == 0){
                         dp[i][j] = 1;
                     }
