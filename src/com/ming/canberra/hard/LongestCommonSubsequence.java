@@ -36,6 +36,7 @@ public class LongestCommonSubsequence {
                 }
             }
         }
+        System.out.println(dp[chars1.length - 1][chars2.length - 1]);
         return resultList;
     }
 }

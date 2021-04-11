@@ -1,6 +1,7 @@
 package com.ming.canberra.medium;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class MinMaxStackConstruction {
@@ -10,28 +11,43 @@ public class MinMaxStackConstruction {
     }
     // Feel free to add new properties and methods to the class.
     static class MinMaxStack {
+        private Map<Integer, Integer[]> map = new HashMap<Integer, Integer[]>();
+
         public int peek() {
-            // Write your code here.
+            int mapSize = map.size();
+            if (mapSize > 0){
+                return map.get(mapSize)[0];
+            }
             return -1;
         }
 
         public int pop() {
-            // Write your code here.
-            return -1;
+            int mapSize = map.size();
+            int result = map.get(mapSize)[0];
+            map.remove(mapSize);
+            return result;
         }
-
         public void push(Integer number) {
-            // Write your code here.
+            int mapSize = map.size();
+            int currentMin;
+            int currentMax;
+            if (mapSize == 0){
+                currentMin = Integer.MAX_VALUE;
+                currentMax = Integer.MIN_VALUE;
+            }
+            else{
+                currentMin = map.get(mapSize)[1];
+                currentMax = map.get(mapSize)[2];
+            }
+            currentMin = Math.min(currentMin, number);
+            currentMax = Math.max(currentMax, number);
+            map.put(mapSize + 1, new Integer[]{number, currentMin, currentMax});
         }
-
         public int getMin() {
-            // Write your code here.
-            return -1;
+            return map.get(map.size())[1];
         }
-
         public int getMax() {
-            // Write your code here.
-            return -1;
+            return map.get(map.size())[2];
         }
     }
 }
