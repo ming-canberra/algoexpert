@@ -39,7 +39,7 @@ public class BoggleBoard {
     }
 
     private static boolean matchFound(int i, int j, char[][] board, String stringToMatch){
-
+        return true;
     }
 }
 
