@@ -8,6 +8,9 @@ public class NumbersInPi {
 
     public static int numbersInPi(String pi, String[] numbers) {
         // Write your code here.
+
+        "sadf".indexOf("");
+
         return -1;
     }
 }
