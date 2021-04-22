@@ -6,6 +6,7 @@ public class MaxPathSumInBinaryTree {
     }
     private int _result = 0;
     public static int maxPathSum(BinaryTree tree) {
+        return 1;
     }
     static class BinaryTree {
         public int value;
