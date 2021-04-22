@@ -3,7 +3,22 @@ package com.ming.canberra.medium;
 public class KadanesAlgorithm {
     public static void main(String[] args) {
         int aa[] = new int[]{3, 4, -6, 7, 8};
-        System.out.println (KadanesAlgorithm.kadanesAlgorithm(aa));
+        System.out.println (KadanesAlgorithm.kadanesAlgorithm3(aa));
+    }
+    public static int kadanesAlgorithm3(int[] array) {
+        int result = 0;
+        int currentSum = 0;
+        for (int i = 0; i < array.length; i++){
+            if (i == 0){
+                result = array[i];
+            }
+            currentSum+=array[i];
+            result = Math.max(result, currentSum);
+            if(currentSum < 0){
+                currentSum = 0;
+            }
+        }
+        return result;
     }
 
     public static int kadanesAlgorithm2(int[] array) {
